@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog changesets/dbchangelog-3.4.xsd
+	http://www.liquibase.org/xml/ns/dbchangelog-ext changesets/dbchangelog-ext.xsd">
+	
+
+  	<property name="currenttimestamp" value="now()" dbms="postgresql"/>
+  	
+	<include file="changesets/create_category_table.xml" relativeToChangelogFile="true"/>	
+
+</databaseChangeLog>

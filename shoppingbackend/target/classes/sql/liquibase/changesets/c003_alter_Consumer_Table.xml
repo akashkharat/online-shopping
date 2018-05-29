@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext dbchangelog-ext.xsd">
+
+	<changeSet logicalFilePath="c003_alter_consumer_table_columns.xml"
+		author="Akash Kharat" id="c003_alter_consumer_table_columns">
+
+		<renameColumn columnDataType="VARCHAR(64)" newColumnName="consumer_id"
+			oldColumnName="customer_id" tableName="consumer" />
+		<renameColumn columnDataType="VARCHAR(64)" newColumnName="consumer_id"
+			oldColumnName="customer_id" tableName="license" />
+
+
+	</changeSet>
+	<changeSet author="Akash kharat" id="addPartnerIdColumn">
+		<addColumn schemaName="public" tableName="consumer">
+			<column name="partner_id" type="INT" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Akash" id="addForeignToPartner">
+		<addForeignKeyConstraint baseColumnNames="partner_id"
+			baseTableName="consumer" constraintName="fk_partner_id"
+			referencedColumnNames="id" referencedTableName="consumer" />
+	</changeSet>
+
+
+	<changeSet author="Akash kharat" id="MaximumNumberOfTrialLicense">
+		<addColumn schemaName="public" tableName="consumer">
+			<column name="max_licences" type="INT" defaultValue="0" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Akash kharat" id="addLicenseUserColumn">
+		<addColumn schemaName="public" tableName="license">
+			<column name="license_user" type="VARCHAR(256)" />
+		</addColumn>
+	</changeSet>
+
+</databaseChangeLog>
