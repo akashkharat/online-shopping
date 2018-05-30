@@ -1,28 +1,227 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog dbchangelog-3.4.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext dbchangelog-ext.xsd">
-        
-     <changeSet logicalFilePath="create_category_table.xml" author="Akash kharat" id="create_category">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="category" />
-            </not>
-        </preConditions>
-        <createSequence cycle="true" incrementBy="1" startValue="1"
-			sequenceName="category_id_seq" maxValue="9223372036854775807" />
-        <createTable tableName="category">
-     	    <column name="id" type="INT" remarks="category primary id">
-                <constraints primaryKey="true" nullable="false" />
-            </column>         
-            <column name="name" type="VARCHAR(255)"/>             
-            <column name="description" type="VARCHAR(255)" />
-			<column name="is_available" type="BOOLEAN" />
+
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_category">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="category" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="category_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="category">
+			<column name="id" type="INT" remarks="category primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="VARCHAR(255)" />
+			<column name="description" type="VARCHAR(255)" />
+			<column name="is_active" type="BOOLEAN" />
 			<column name="image_url" type="VARCHAR(255)" />
-         </createTable>
-</changeSet>
-    
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_userdetail">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="user_detail" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="user_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="user_detail">
+			<column name="id" type="INT" remarks="user primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="first_name" type="VARCHAR(64)" />
+			<column name="last_name" type="VARCHAR(64)" />
+			<column name="password" type="VARCHAR(64)" />
+			<column name="email" type="VARCHAR(255)" />
+			<column name="contact_number" type="VARCHAR(15)" />
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_product">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="product" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="product_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="product">
+			<column name="id" type="INT" remarks="product primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="code" type="VARCHAR(20)" />
+			<column name="name" type="VARCHAR(50)" />
+			<column name="brand" type="VARCHAR(50)" />
+			<column name="description" type="VARCHAR(255)" />
+			<column name="unit_price" type="DECIMAL(10,2)" />
+			<column name="is_active" type="boolean" />
+			<column name="purchase" type="INT" defaultValue="0" />
+			<column name="views" type="INT" defaultValue="0" />
+			<column name="category_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_product_category_id"
+					referencedTableName="category" referencedColumnNames="id" />
+			</column>
+			<column name="supplier_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_product_supplier_id"
+					referencedTableName="user_detail" referencedColumnNames="id" />
+			</column>
+
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_address">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="address" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="address_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="address">
+			<column name="id" type="INT" remarks="address primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="address_line_one" type="VARCHAR(200)" />
+			<column name="address_line_two" type="VARCHAR(200)" />
+			<column name="city" type="VARCHAR(20)" />
+			<column name="state" type="VARCHAR(20)" />
+			<column name="country" type="VARCHAR(20)" />
+			<column name="postal_code" type="VARCHAR(10)" />
+			<column name="is_billing" type="BOOLEAN" />
+			<column name="is_shipping" type="BOOLEAN" />
+			<column name="user_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_address_user_id"
+					referencedTableName="user_detail" referencedColumnNames="id" />
+			</column>
+		</createTable>
+	</changeSet>
+
+
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_cart">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="cart" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="cart_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="cart">
+			<column name="id" type="INT" remarks="cart primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="grand_total" type="DECIMAL(10,2)" />
+			<column name="cart_lines" type="INT" />
+			<column name="user_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_cart_user_id"
+					referencedTableName="user_detail" referencedColumnNames="id" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_cart_line">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="cart_line" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="cart_line_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="cart_line">
+			<column name="id" type="INT" remarks="cart line primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="total" type="DECIMAL(10,2)" />
+			<column name="product_count" type="INT" />
+			<column name="buying_price" type="DECIMAL(10,2))" />
+			<column name="is_available" type="BOOLEAN" />
+			<column name="cart_id" type="INT" />
+			<column name="product_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_cartLine_product_id"
+					referencedTableName="product" referencedColumnNames="id" />
+			</column>
+
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_order_detail">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="order_detail" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="order_detail_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="order_detail">
+			<column name="id" type="INT" remarks="order detail primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="order_toatl" type="DECIMAL(10,2)" />
+			<column name="order_count" type="INT" />
+			<column name="order_date" type="DATE" />
+			<column name="user_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_order_detail_user_id"
+					referencedTableName="user_detail" referencedColumnNames="id" />
+			</column>
+			<column name="shipping_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_order_detail_shipping_id"
+					referencedTableName="address" referencedColumnNames="id" />
+			</column>
+			<column name="billing_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_order_detail_billing_id"
+					referencedTableName="address" referencedColumnNames="id" />
+			</column>
+
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_category_table.xml"
+		author="Akash kharat" id="create_order_item">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="order_item" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="order_item_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="order_item">
+			<column name="id" type="INT" remarks="order item primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="toatl" type="DECIMAL(10,2)" />
+			<column name="buying_price" type="DECIMAL(10,2)" />
+			<column name="product_count" type="INT" />
+			<column name="product_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_order_item_product_id"
+					referencedTableName="product" referencedColumnNames="id" />
+			</column>
+			<column name="order_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_order_item_order_id"
+					referencedTableName="order_detail" referencedColumnNames="id" />
+			</column>
+
+
+		</createTable>
+	</changeSet>
+	<changeSet author="Akash kharat" id="addroleIdColumn">
+		<addColumn schemaName="public" tableName="user_detail">
+			<column name="role" type="varchar(50)" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="Akash kharat" id="addenableColumn">
+		<addColumn schemaName="public" tableName="user_detail">
+			<column name="enabled" type="BOOLEAN" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="Akash kharat" id="addquantityColumn">
+		<addColumn schemaName="public" tableName="product">
+			<column name="quantity" type="int" />
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>
