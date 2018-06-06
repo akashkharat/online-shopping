@@ -11,6 +11,6 @@ import com.shoppingbackend.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query(" select pr from Product pr where pr.category.id = ?1 order by id DESC")
+	@Query(" select pr from Product pr where pr.categoryId = ?1 order by pr.id DESC")
 	public List<Product> findByCategory(Integer categoryId);
 }

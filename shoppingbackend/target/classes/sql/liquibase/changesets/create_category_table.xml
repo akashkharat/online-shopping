@@ -224,4 +224,64 @@
 			<column name="quantity" type="int" />
 		</addColumn>
 	</changeSet>
+	<changeSet logicalFilePath="create_role_table.xml"
+		author="Akash kharat" id="create_role">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="role" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="role_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="role">
+			<column name="id" type="INT" remarks="role primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="role" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_user_table.xml"
+		author="Akash kharat" id="create_user">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="user" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="user1_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="user">
+			<column name="id" type="INT" remarks="user primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="active" type="INTEGER" defaultValue="null"/>
+			<column name="first_name" type="VARCHAR(64)" />
+			<column name="last_name" type="VARCHAR(64)" />
+			<column name="password" type="VARCHAR(64)" />
+			<column name="email" type="VARCHAR(255)" />
+			<column name="contact_number" type="VARCHAR(15)" />
+		</createTable>
+	</changeSet>
+	<changeSet logicalFilePath="create_user_role.xml"
+		author="Akash kharat" id="create_user_role">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="user_role" />
+			</not>
+		</preConditions>
+		<createSequence cycle="true" incrementBy="1"
+			startValue="1" sequenceName="user_role_id_seq" maxValue="9223372036854775807" />
+		<createTable tableName="user_role">
+			<column name="id" type="INT" remarks="user_role primary id">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="user_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_user_role_user_id"
+					referencedTableName="user" referencedColumnNames="id" />
+			</column>
+			<column name="role_id" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_role_role_id"
+					referencedTableName="role" referencedColumnNames="id" />
+			</column>
+		</createTable>
+	</changeSet>
 </databaseChangeLog>

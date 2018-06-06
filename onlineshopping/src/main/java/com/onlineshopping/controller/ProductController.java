@@ -27,7 +27,7 @@ public class ProductController {
 	public List<Product> getProductsByCategory(@PathVariable Integer categoryId){
 		
 		
-		return null;
+		return productService.getProductsByCategory(categoryId);
 	}
 
 }
